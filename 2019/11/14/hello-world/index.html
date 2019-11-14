@@ -1,90 +1,52 @@
-{% extends "_layout.njk" %}
+extends base
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for("css/page.css") }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for("css/post.css") }}">
-{% endblock %}
+block title
+  title= page.title + ' | ' + config.title
 
-{% block title %}{{ page.title }} | {{ config.title }}{% if config.subtitle %} - {{ config.subtitle }}{% endif %}{% endblock %}
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta
+      if theme.comment
+        include _partial/comment_count
+        +comment-count(page.path)
+      p
+        span.date= page.date.format(theme.date_formats.post)
+        if page.categories.length > 0
+          span
+            for category in page.categories.toArray()
+              a.category(href=url_for(category.path))= category.name 
+        if theme.busuanzi == true
+          span
+            i#busuanzi_container_page_pv
+              i#busuanzi_value_page_pv
+              i= '' + __('hits')
+    .post-content
+      != page.content
+    if theme.copyright.enable
+      .post-copyright
+        blockquote
+          p=  __("copyright_author") + ": " + config.author
+          p= __("copyright_link") + ": " 
+            a(href=url_for(config.url +'/'+ page.path))= config.url +'/'+ page.path
+          p!= __("copyright_notice") + ": " + (theme.copyright.describe ? theme.copyright.describe : __("copyright_details"))
+    include _partial/tag
+    .post-share
+      include _partial/share
+    include _partial/post_nav
+    #comments
+      include _partial/comments
 
-{% block content %}
-<div id="post" class="page">
-  {% set post = page %}
-  <article class="article post card{% if theme.animate %} animate{% endif %}" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="{{ config.url }}{{ url_for(page.path) }}">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-       <meta itemprop="name" content="{{ config.author }}">
-       <meta itemprop="description" content="{{ config.description }}">
-       <meta itemprop="image" content="{{ url_for(theme.avatar) }}">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-       <meta itemprop="name" content="{{ config.title }}">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-      <div class="post-meta">
-        {% if page.date %}
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="{{ moment(post.date).format() }}">{{ date(post.date, config.date_format) }} {{ time(post.date, config.time_format) }}</time></span>
-        </span>
-        {% endif %}
-        {% if page.categories and page.categories.toArray().length %}
-        {% if page.date %}
-        <span class="post-meta-divider divider">|</span>
-        {% endif %}
-        <span class="post-categories">
-          {# About `-`: https://mozilla.github.io/nunjucks/cn/templating.html#part-861ece9d8e5ce60c #}
-          {% for cat in page.categories.toArray() -%}
-          {% if loop.first %}<i class="far fa-folder-open"></i>{% else %}<i class="fas fa-angle-right"></i>{% endif %}<span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="{{ url_for(cat.path) }}" itemprop="url" rel="index"><span itemprop="name">{{ cat.name }}</span></a></span>
-          {%- endfor %}
-        </span>
-        {% endif %}
-        {% if page.comment !== false and theme.comment.enable %}
-        {% if theme.comment.disqus_shortname %}
-        {% if page.categories or page.date %}
-        <span class="post-meta-divider divider">|</span>
-        {% endif %}
-        <span class="post-comment-count">
-          <i class="far fa-comments"></i><span><a href="{{ url_for(page.path) }}#disqus_thread" itemprop="discussionUrl"><span class="post-comment-count disqus-comment-count" data-disqus-identifier="{{ page.path }}" itemprop="commentCount"></span></a></span>
-        </span>
-        {% endif %}
-        {% endif %}
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      {{ page.content }}
-    </main>
-    <footer class="post-footer">
-      {% if page.tags and page.tags.toArray().length %}
-      <div class="post-tags">
-        {% for tag in page.tags.toArray() %}
-        <a class="post-tag button" href="{{ url_for(tag.path) }}" rel="tag"><i class="fas fa-tags"></i>{{ tag.name }}</a>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </footer>
-  </article>
-  {% if theme.reward.enable %}
-  {% include "reward.njk" %}
-  {% endif %}
-  {% if page.prev or page.next %}
-  <nav class="page-nav">
-    <div class="page-nav-next page-nav-item">
-      {% if page.next %}
-      <a href="{{ url_for(page.next.path) }}" rel="next" title="{{ page.next.title }}"><i class="fas fa-angle-left"></i><span class="nav-title">{{ page.next.title }}</span></a>
-      {% endif %}
-    </div>
-    <div class="page-nav-prev page-nav-item">
-      {% if page.prev %}
-      <a href="{{ url_for(page.prev.path) }}" rel="prev" title="{{ page.prev.title }}"><span class="nav-title">{{ page.prev.title }}</span><i class="fas fa-angle-right"></i></a>
-      {% endif %}
-    </div>
-  </nav>
-  {% endif %}
-  {% if theme.comment.enable %}
-  {% include "comment.njk" %}
-  {% endif %}
-</div>
-{% endblock %}
+block tocmodel
+  if theme.toc.enable == true 
+    .widget(id='toc')
+      .widget-title
+        i(class='fa fa-fei')= __('contents')
+      != toc(page.content, {list_number: theme.toc.number})
+
+block pageOnly
+  if theme.toc.enable == true 
+    script(type='text/javascript', src=url_for(theme.js) + '/toctotop.js' + '?v=' + theme.version, async)
+  else 
+    script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
+  include _partial/comments_js
