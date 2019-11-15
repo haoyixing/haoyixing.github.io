@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://yoursite.com/2019/11/15/allthings/</loc>
+    <loc>http://yoursite.com/2019/11/14/all/</loc>
     <lastmod>2019-11-15</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/14/new/</loc>
     <lastmod>2019-11-15</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/11/14/all/</loc>
+    <loc>http://yoursite.com/2019/11/15/allthings/</loc>
     <lastmod>2019-11-15</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/14/hello-world/</loc>
