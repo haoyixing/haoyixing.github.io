@@ -1,4 +1,5 @@
 // get user config
+
 var start_date = document.getElementById("runtionshow").getAttribute("start_date")
 
 function show_date_time() {
