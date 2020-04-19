@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://haoyixing.github.io/"/>
-  <updated>2019-11-24T03:46:10.359Z</updated>
+  <updated>2020-04-19T08:47:05.394Z</updated>
   <id>http://haoyixing.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mathtype更新试用时间</title>
+    <link href="http://haoyixing.github.io/2020/04/19/mathtype/"/>
+    <id>http://haoyixing.github.io/2020/04/19/mathtype/</id>
+    <published>2020-04-19T08:44:29.000Z</published>
+    <updated>2020-04-19T08:47:05.394Z</updated>
+    
+    <content type="html"><![CDATA[<p>mathtype下载之后会有30天的试用期，试用期一过软件就会变成所谓的精简版，很多功能都不能再用，<br>比如说公式格式化和公式编号功能。<br>解决方法：关闭mathtype<br>打开电脑的注册表编辑器（按住win+R快捷键运行，然后输入regedit.exe）<br>找到一级目录HKEY_CURRENT_USER下的software目录，在该级目录里找到install option目录，删除注册列表中的第二项，蓝色箭头指的那个option6.9文件<br>重启mathtype即可重新使用30天<br>亲测有效</p><p>作者：Evan<br>链接：<a href="https://www.zhihu.com/question/37054764/answer/995462064" target="_blank" rel="noopener">https://www.zhihu.com/question/37054764/answer/995462064</a><br>来源：知乎</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;mathtype下载之后会有30天的试用期，试用期一过软件就会变成所谓的精简版，很多功能都不能再用，&lt;br&gt;比如说公式格式化和公式编号功能。&lt;br&gt;解决方法：关闭mathtype&lt;br&gt;打开电脑的注册表编辑器（按住win+R快捷键运行，然后输入regedit.exe）&lt;br
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Allthings</title>
